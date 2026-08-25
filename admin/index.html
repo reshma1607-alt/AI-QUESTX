@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI QUESTX Admin</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+<body>
+
+    <div class="admin-container">
+
+        <h1>AI QUESTX</h1>
+
+        <p class="subtitle">
+            Admin Dashboard
+        </p>
+
+
+        <!-- LOGIN -->
+
+        <section id="loginSection">
+
+            <h2>Admin Login</h2>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Admin Username"
+            >
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Admin Password"
+            >
+
+            <button id="loginButton">
+                LOGIN
+            </button>
+
+            <p id="loginMessage"></p>
+
+        </section>
+
+
+        <!-- DASHBOARD -->
+
+        <section
+            id="dashboardSection"
+            style="display: none;"
+        >
+
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <h3>Total Teams</h3>
+
+                    <p id="totalTeams">
+                        0
+                    </p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <h3>Top Score</h3>
+
+                    <p id="topScore">
+                        0
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <h2>
+                Leaderboard
+            </h2>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Rank
+                        </th>
+
+                        <th>
+                            Team ID
+                        </th>
+
+                        <th>
+                            Team Name
+                        </th>
+
+                        <th>
+                            Best Score
+                        </th>
+
+                        <th>
+                            Time
+                        </th>
+
+                        <th>
+                            Attempts
+                        </th>
+                        <th>
+                            Details
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="leaderboardBody">
+
+                </tbody>
+
+            </table>
+            <div id="attemptHistory"
+     style="display: none; margin-top: 30px;">
+
+    <h2 id="attemptTitle">
+        Attempt History
+    </h2>
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Attempt</th>
+                <th>Score</th>
+                <th>Elapsed Time</th>
+                <th>New Best</th>
+                <th>Submitted At</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="attemptBody"></tbody>
+
+    </table>`
+
+</div>
+
+
+            <p id="dashboardMessage"></p>
+
+        </section>
+
+    </div>
+
+
+    <script src="admin.js"></script>
+
+</body>
+
+</html>

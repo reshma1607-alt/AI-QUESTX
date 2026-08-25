@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI QUESTX — Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="../css/admin.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         BACKGROUND EFFECTS
+    ========================================== -->
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+
+    <!-- =========================================
+         MAIN DASHBOARD
+    ========================================== -->
+
+    <main class="dashboard">
+
+
+        <!-- =====================================
+             HEADER
+        ====================================== -->
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <div class="brand">
+                    ◈ AI QUESTX
+                </div>
+
+                <h1>
+                    Competition Control Center
+                </h1>
+
+                <p>
+                    Prompt Masters • University AI Challenge
+                </p>
+
+            </div>
+
+
+            <div class="live-status">
+
+                <span class="live-dot"></span>
+
+                LIVE SYSTEM
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =====================================
+             STATISTICS
+        ====================================== -->
+
+        <section class="stats">
+
+
+            <!-- TEAMS -->
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    👥
+                </span>
+
+                <div>
+
+                    <span class="stat-label">
+                        TEAMS
+                    </span>
+
+                    <strong id="totalTeams">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIVE -->
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    🟢
+                </span>
+
+                <div>
+
+                    <span class="stat-label">
+                        ACTIVE
+                    </span>
+
+                    <strong id="activeTeams">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOP SCORE -->
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    🏆
+                </span>
+
+                <div>
+
+                    <span class="stat-label">
+                        TOP SCORE
+                    </span>
+
+                    <strong id="topScore">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- ATTEMPTS -->
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    📝
+                </span>
+
+                <div>
+
+                    <span class="stat-label">
+                        ATTEMPTS
+                    </span>
+
+                    <strong id="totalAttempts">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             LEADERBOARD
+        ====================================== -->
+
+        <section class="leaderboard-panel">
+
+
+            <!-- PANEL HEADER -->
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="panel-tag">
+                        LIVE RANKINGS
+                    </span>
+
+                    <h2>
+                        🏆 Competition Leaderboard
+                    </h2>
+
+                </div>
+
+
+                <button id="refreshButton">
+
+                    ↻ Refresh
+
+                </button>
+
+            </div>
+
+
+
+            <!-- TABLE -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                RANK
+                            </th>
+
+                            <th>
+                                TEAM
+                            </th>
+
+                            <th>
+                                SCORE
+                            </th>
+
+                            <th>
+                                ATTEMPTS
+                            </th>
+
+                            <th>
+                                TIME
+                            </th>
+
+                            <th>
+                                STATUS
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="leaderboardBody">
+
+                        <tr>
+
+                            <td colspan="6"
+                                class="loading">
+
+                                🔄 Loading leaderboard...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+            <!-- LAST UPDATED -->
+
+            <div class="last-updated">
+
+                <span>
+                    🔄 Auto refresh enabled
+                </span>
+
+                <span id="lastUpdated">
+                    --
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             TEAM DETAILS MODAL
+        ====================================== -->
+
+        <div id="teamModal"
+             class="team-modal">
+
+
+            <div class="team-modal-card">
+
+
+                <!-- CLOSE BUTTON -->
+
+                <button id="closeTeamModal"
+                        class="close-modal">
+
+                    ✕
+
+                </button>
+
+
+
+                <!-- MODAL HEADER -->
+
+                <div class="modal-header">
+
+                    <span class="panel-tag">
+                        TEAM PERFORMANCE
+                    </span>
+
+                    <h2 id="modalTeamName">
+                        Team Details
+                    </h2>
+
+                    <p id="modalTeamId">
+                        —
+                    </p>
+
+                </div>
+
+
+
+                <!-- TEAM SUMMARY -->
+
+                <div class="team-summary">
+
+
+                    <!-- BEST SCORE -->
+
+                    <div class="summary-card">
+
+                        <span>
+                            🏆 BEST SCORE
+                        </span>
+
+                        <strong id="modalBestScore">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ATTEMPTS -->
+
+                    <div class="summary-card">
+
+                        <span>
+                            📝 ATTEMPTS
+                        </span>
+
+                        <strong id="modalAttempts">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <!-- IMAGE -->
+
+                    <div class="summary-card">
+
+                        <span>
+                            🖼️ IMAGE
+                        </span>
+
+                        <strong id="modalImage">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <!-- BEST TIME -->
+
+                    <div class="summary-card">
+
+                        <span>
+                            ⏱️ BEST TIME
+                        </span>
+
+                        <strong id="modalBestTime">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================
+                     ATTEMPT HISTORY
+                ================================== -->
+
+                <div class="attempt-section">
+                    <!-- =========================================
+     ADMIN TEAM CONTROLS
+========================================= -->
+
+<div class="admin-controls">
+
+    <div class="attempt-title">
+        ⚙️ Competition Controls
+    </div>
+
+    <div class="control-buttons">
+
+        <button
+            id="viewAttemptsButton"
+            class="control-btn view-btn"
+        >
+            📝 View Attempts
+        </button>
+
+        <button
+            id="endRoundButton"
+            class="control-btn end-btn"
+        >
+            ⏹️ End Round
+        </button>
+
+        <button
+            id="lockScoreButton"
+            class="control-btn lock-btn"
+        >
+            🔒 Lock Score
+        </button>
+
+    </div>
+
+</div>
+
+
+                    <div class="attempt-title">
+
+                        📝 Attempt History
+
+                    </div>
+
+
+                    <div class="attempt-table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        #
+                                    </th>
+
+                                    <th>
+                                        SCORE
+                                    </th>
+
+                                    <th>
+                                        TIME
+                                    </th>
+
+                                    <th>
+                                        BEST
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="attemptBody">
+
+                                <tr>
+
+                                    <td colspan="4"
+                                        class="loading">
+
+                                        Loading attempts...
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             FOOTER
+        ====================================== -->
+
+        <footer>
+
+            <span>
+                ◈ AI QUESTX
+            </span>
+
+            <span>
+                ADMIN CONTROL CENTER
+            </span>
+
+            <span>
+                🔒 SECURE COMPETITION SYSTEM
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script src="../js/admin.js"></script>
+
+
+</body>
+
+</html>
