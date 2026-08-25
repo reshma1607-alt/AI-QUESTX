@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000";
+const API_URL = "https://ai-questx.onrender.com";
 
 let teamId = null;
 let timerInterval = null;
