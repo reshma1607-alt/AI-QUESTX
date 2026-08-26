@@ -1278,3 +1278,75 @@ footer {
     }
 
 }
+/* ==========================================
+   ADMIN LOGIN
+========================================== */
+
+.admin-login {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    position: relative;
+    z-index: 10;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    background: rgba(15, 15, 25, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.login-card .brand {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.login-card h1 {
+    margin: 0 0 8px;
+}
+
+.login-card p {
+    margin-bottom: 25px;
+    opacity: 0.75;
+}
+
+.login-card label {
+    display: block;
+    text-align: left;
+    margin: 15px 0 7px;
+    font-weight: 600;
+}
+
+.login-card input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+    color: inherit;
+    outline: none;
+}
+
+.login-card button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+#adminLoginMessage {
+    min-height: 20px;
+    margin-top: 15px;
+}

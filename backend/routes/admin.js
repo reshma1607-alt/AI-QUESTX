@@ -4,6 +4,16 @@ const Attempt = require("../models/Attempt");
 const adminAuth = require("../middleware/adminAuth");
 
 const router = express.Router();
+// ==========================================
+// ADMIN LOGIN
+// ==========================================
+
+router.post("/login", adminAuth, (req, res) => {
+    res.json({
+        success: true,
+        message: "Admin login successful"
+    });
+});
 
 
 // ==========================================

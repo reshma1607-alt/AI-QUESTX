@@ -1,12 +1,84 @@
-const API_URL = "https://ai-questx.onrender.com";
-
+const API_URL = "http://localhost:5000";
 
 // ==========================================
-// ADMIN CREDENTIALS
+// ADMIN LOGIN
 // ==========================================
 
-const ADMIN_USERNAME = "aiquestx_admin";
-const ADMIN_PASSWORD = "AI QUESTX@123";
+const adminLogin = document.getElementById("adminLogin");
+const adminLoginButton = document.getElementById("adminLoginButton");
+const adminLoginMessage = document.getElementById("adminLoginMessage");
+
+let adminUsername = "";
+let adminPassword = "";
+
+if (adminLoginButton) {
+    adminLoginButton.addEventListener("click", async () => {
+
+        const username =
+            document.getElementById("adminUsername").value.trim();
+
+        const password =
+            document.getElementById("adminPassword").value;
+
+        if (!username || !password) {
+            adminLoginMessage.textContent =
+                "Please enter username and password.";
+            return;
+        }
+
+        adminLoginButton.disabled = true;
+        adminLoginButton.textContent = "Logging in...";
+        adminLoginMessage.textContent = "";
+
+        try {
+
+            const response = await fetch(
+                `${API_URL}/api/admin/login`,
+                {
+                    method: "POST",
+                    headers: {
+                        "x-admin-username": username,
+                        "x-admin-password": password
+                    }
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(
+                    data.message || "Invalid credentials"
+                );
+            }
+
+            // Store credentials only for this browser session
+            adminUsername = username;
+            adminPassword = password;
+
+            // Hide login
+            adminLogin.style.display = "none";
+
+            // Show dashboard
+            document.querySelector(".dashboard").style.display = "block";
+
+            // Load leaderboard
+            loadLeaderboard();
+
+        } catch (error) {
+
+            console.error("Admin login error:", error);
+
+            adminLoginMessage.textContent =
+                "❌ Invalid username or password.";
+
+        } finally {
+
+            adminLoginButton.disabled = false;
+            adminLoginButton.textContent = "LOGIN";
+
+        }
+    });
+}
 
 
 // ==========================================
@@ -93,10 +165,10 @@ async function loadLeaderboard() {
 
                 headers: {
                     "x-admin-username":
-                        ADMIN_USERNAME,
+                        adminUsername,
 
                     "x-admin-password":
-                        ADMIN_PASSWORD
+                        adminPassword
                 }
             }
         );
@@ -543,10 +615,10 @@ async function openTeamDetails(team) {
                     headers: {
 
                         "x-admin-username":
-                            ADMIN_USERNAME,
+                            adminUsername,
 
                         "x-admin-password":
-                            ADMIN_PASSWORD
+                            adminPassword
 
                     }
                 }
@@ -1096,10 +1168,10 @@ async function endSelectedTeamRound() {
                     headers: {
 
                         "x-admin-username":
-                            ADMIN_USERNAME,
+                            adminUsername,
 
                         "x-admin-password":
-                            ADMIN_PASSWORD
+                            adminPassword
 
                     }
                 }
@@ -1181,16 +1253,7 @@ if (endRoundButton) {
 }
 
 
-// ==========================================
-// INITIAL LOAD
-// ==========================================
 
-loadLeaderboard();
-// ==========================================
-// INITIAL LOAD
-// ==========================================
-
-loadLeaderboard();
 
 // ==========================================
 // LIVE TIMER UPDATE
