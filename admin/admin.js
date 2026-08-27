@@ -409,3 +409,151 @@ setInterval(async () => {
     }
 
 }, 5000);
+// ==========================================
+// TOP TEAMS → ROOM ASSIGNMENT
+// ==========================================
+
+const topTeamCountInput = document.getElementById("topTeamCount");
+const generateRoomsButton = document.getElementById("generateRoomsButton");
+
+const room404Count = document.getElementById("room404Count");
+const room405Count = document.getElementById("room405Count");
+
+const room404Teams = document.getElementById("room404Teams");
+const room405Teams = document.getElementById("room405Teams");
+
+const roomAssignmentMessage =
+    document.getElementById("roomAssignmentMessage");
+
+
+generateRoomsButton.addEventListener("click", async () => {
+
+    const count = Number(topTeamCountInput.value);
+
+    // Validate number
+    if (!count || count < 1 || count > 50) {
+
+        roomAssignmentMessage.textContent =
+            "Please enter a number between 1 and 50.";
+
+        return;
+    }
+
+    try {
+
+        roomAssignmentMessage.textContent =
+            "Loading top teams...";
+
+        // Get leaderboard
+        const response = await fetch(
+    `${API_URL}/api/admin/leaderboard`,
+    {
+        method: "GET",
+        headers: {
+            "x-admin-username": adminUsername,
+            "x-admin-password": adminPassword
+        }
+    }
+);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message || "Unable to load leaderboard"
+            );
+        }
+
+        // Get teams from response
+        const teams = data.teams || data.leaderboard || [];
+
+        if (teams.length === 0) {
+
+            roomAssignmentMessage.textContent =
+                "No teams found.";
+
+            return;
+        }
+
+        // Take requested number of top teams
+        const topTeams = teams
+            .sort((a, b) => {
+
+                const scoreA = Number(a.bestScore || a.score || 0);
+                const scoreB = Number(b.bestScore || b.score || 0);
+
+                return scoreB - scoreA;
+            })
+            .slice(0, count);
+
+
+        // Clear previous results
+        room404Teams.innerHTML = "";
+        room405Teams.innerHTML = "";
+
+
+        // Split approximately 50/50
+        const room404Number = Math.ceil(topTeams.length / 2);
+
+        const teams404 = topTeams.slice(
+            0,
+            room404Number
+        );
+
+        const teams405 = topTeams.slice(
+            room404Number
+        );
+
+
+        // Display Room 404
+        teams404.forEach((team, index) => {
+
+            const div = document.createElement("div");
+
+            div.className = "assigned-team";
+
+            div.textContent =
+                `${index + 1}. ${team.teamId} — ${team.teamName}`;
+
+            room404Teams.appendChild(div);
+        });
+
+
+        // Display Room 405
+        teams405.forEach((team, index) => {
+
+            const div = document.createElement("div");
+
+            div.className = "assigned-team";
+
+            div.textContent =
+                `${index + 1}. ${team.teamId} — ${team.teamName}`;
+
+            room405Teams.appendChild(div);
+        });
+
+
+        // Update counts
+        room404Count.textContent =
+            teams404.length;
+
+        room405Count.textContent =
+            teams405.length;
+
+
+        roomAssignmentMessage.textContent =
+            `${topTeams.length} teams assigned successfully.`;
+
+    } catch (error) {
+
+        console.error(
+            "Room assignment error:",
+            error
+        );
+
+        roomAssignmentMessage.textContent =
+            "Unable to generate room assignment.";
+    }
+
+});

@@ -189,6 +189,176 @@ router.post("/team/:teamId/end-round", adminAuth, async (req, res) => {
     }
 
 });
+// ==========================================
+// ASSIGN TOP TEAMS TO ROOMS
+// ==========================================
 
+router.post("/assign-rooms", async (req, res) => {
+
+    try {
+
+        const { count } = req.body;
+
+        // --------------------------------------
+        // Validate count
+        // --------------------------------------
+
+        if (
+            !Number.isInteger(count) ||
+            count < 1 ||
+            count > 50
+        ) {
+
+            return res.status(400).json({
+                success: false,
+                message: "Count must be between 1 and 50"
+            });
+
+        }
+
+
+        // --------------------------------------
+        // Get all teams
+        // --------------------------------------
+
+        const teams = await Team.find({})
+            .sort({
+                bestScore: -1,
+                bestScoreElapsedSeconds: 1
+            });
+
+
+        if (!teams.length) {
+
+            return res.status(404).json({
+                success: false,
+                message: "No teams found"
+            });
+
+        }
+
+
+        // --------------------------------------
+        // Select TOP N
+        // --------------------------------------
+
+        const topTeams =
+            teams.slice(0, count);
+
+
+        // --------------------------------------
+        // Divide rooms
+        // --------------------------------------
+
+        const room404Count =
+            Math.ceil(topTeams.length / 2);
+
+
+        const room404Teams =
+            topTeams.slice(
+                0,
+                room404Count
+            );
+
+
+        const room405Teams =
+            topTeams.slice(
+                room404Count
+            );
+
+
+        // --------------------------------------
+        // Save Room 404
+        // --------------------------------------
+
+        await Promise.all(
+            room404Teams.map(team =>
+                Team.updateOne(
+                    { _id: team._id },
+                    {
+                        $set: {
+                            roomNumber: 404
+                        }
+                    }
+                )
+            )
+        );
+
+
+        // --------------------------------------
+        // Save Room 405
+        // --------------------------------------
+
+        await Promise.all(
+            room405Teams.map(team =>
+                Team.updateOne(
+                    { _id: team._id },
+                    {
+                        $set: {
+                            roomNumber: 405
+                        }
+                    }
+                )
+            )
+        );
+
+
+        // --------------------------------------
+        // Response
+        // --------------------------------------
+
+        res.json({
+
+            success: true,
+
+            message:
+                `${topTeams.length} teams assigned successfully`,
+
+            totalTeams:
+                topTeams.length,
+
+            room404Count:
+                room404Teams.length,
+
+            room405Count:
+                room405Teams.length,
+
+            room404Teams:
+                room404Teams.map(team => ({
+                    teamId: team.teamId,
+                    teamName: team.teamName,
+                    score: team.bestScore,
+                    roomNumber: 404
+                })),
+
+            room405Teams:
+                room405Teams.map(team => ({
+                    teamId: team.teamId,
+                    teamName: team.teamName,
+                    score: team.bestScore,
+                    roomNumber: 405
+                }))
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Assign rooms error:",
+            error
+        );
+
+        res.status(500).json({
+
+            success: false,
+
+            message:
+                "Unable to assign rooms"
+
+        });
+
+    }
+
+});
 
 module.exports = router;

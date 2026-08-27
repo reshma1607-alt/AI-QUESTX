@@ -1304,3 +1304,212 @@ setInterval(
     updateLiveTimers,
     1000
 );
+
+// ==========================================
+// TOP TEAMS → ROOM ASSIGNMENT
+// ==========================================
+
+const topTeamCountInput =
+    document.getElementById("topTeamCount");
+
+const generateRoomsButton =
+    document.getElementById("generateRoomsButton");
+
+const room404Count =
+    document.getElementById("room404Count");
+
+const room405Count =
+    document.getElementById("room405Count");
+
+const room404Teams =
+    document.getElementById("room404Teams");
+
+const room405Teams =
+    document.getElementById("room405Teams");
+
+const roomAssignmentMessage =
+    document.getElementById("roomAssignmentMessage");
+
+
+if (generateRoomsButton) {
+
+    generateRoomsButton.addEventListener(
+        "click",
+        async () => {
+
+            const count =
+                Number(topTeamCountInput.value);
+
+
+            // -------------------------------
+            // Validate
+            // -------------------------------
+
+            if (
+                !Number.isInteger(count) ||
+                count < 1 ||
+                count > 50
+            ) {
+
+                roomAssignmentMessage.textContent =
+                    "Please enter a number between 1 and 50.";
+
+                return;
+            }
+
+
+            try {
+
+                generateRoomsButton.disabled = true;
+
+                generateRoomsButton.textContent =
+                    "⏳ Assigning...";
+
+                roomAssignmentMessage.textContent =
+                    "Selecting top teams and assigning rooms...";
+
+
+                // -------------------------------
+                // SAVE ASSIGNMENT TO BACKEND
+                // -------------------------------
+
+                const response = await fetch(
+                    `${API_URL}/api/admin/assign-rooms`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json",
+
+                            "x-admin-username":
+                                adminUsername,
+
+                            "x-admin-password":
+                                adminPassword
+                        },
+
+                        body: JSON.stringify({
+                            count: count
+                        })
+                    }
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to assign rooms"
+                    );
+
+                }
+
+
+                if (!data.success) {
+
+                    throw new Error(
+                        data.message ||
+                        "Room assignment failed"
+                    );
+
+                }
+
+
+                // -------------------------------
+                // CLEAR OLD RESULTS
+                // -------------------------------
+
+                room404Teams.innerHTML = "";
+                room405Teams.innerHTML = "";
+
+
+                // -------------------------------
+                // ROOM 404
+                // -------------------------------
+
+                data.room404Teams.forEach(
+                    (team, index) => {
+
+                        const div =
+                            document.createElement("div");
+
+                        div.className =
+                            "assigned-team";
+
+                        div.textContent =
+                            `${index + 1}. ${team.teamId} — ${team.teamName} — ${team.score}/100`;
+
+                        room404Teams.appendChild(div);
+
+                    }
+                );
+
+
+                // -------------------------------
+                // ROOM 405
+                // -------------------------------
+
+                data.room405Teams.forEach(
+                    (team, index) => {
+
+                        const div =
+                            document.createElement("div");
+
+                        div.className =
+                            "assigned-team";
+
+                        div.textContent =
+                            `${index + 1}. ${team.teamId} — ${team.teamName} — ${team.score}/100`;
+
+                        room405Teams.appendChild(div);
+
+                    }
+                );
+
+
+                // -------------------------------
+                // COUNTS
+                // -------------------------------
+
+                room404Count.textContent =
+                    data.room404Count;
+
+                room405Count.textContent =
+                    data.room405Count;
+
+
+                // -------------------------------
+                // SUCCESS
+                // -------------------------------
+
+                roomAssignmentMessage.textContent =
+                    `✅ ${data.totalTeams} teams assigned successfully.`;
+
+            } catch (error) {
+
+                console.error(
+                    "Room assignment error:",
+                    error
+                );
+
+                roomAssignmentMessage.textContent =
+                    `❌ ${error.message}`;
+
+            } finally {
+
+                generateRoomsButton.disabled =
+                    false;
+
+                generateRoomsButton.textContent =
+                    "🎯 Generate Room Assignment";
+
+            }
+
+        }
+    );
+
+}

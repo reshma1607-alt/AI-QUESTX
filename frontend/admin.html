@@ -11,7 +11,7 @@
     <title>AI QUESTX — Admin Dashboard</title>
 
     <link rel="stylesheet"
-          href="../css/admin.css">
+          href="css/admin.css">
 
 </head>
 
@@ -79,7 +79,7 @@
          MAIN DASHBOARD
     ========================================== -->
 
-    <main class="dashboard" style="display: none;"></main>
+    <main class="dashboard" style="display: none;">
 
 
         <!-- =====================================
@@ -330,6 +330,73 @@
 
 
         </section>
+        <!-- =====================================
+     TOP TEAMS → ROOM ASSIGNMENT
+====================================== -->
+
+<section class="room-assignment-panel">
+
+    <div class="panel-header">
+
+        <div>
+            <span class="panel-tag">
+                NEXT ROUND
+            </span>
+
+            <h2>
+                🏆 Top Teams & Room Assignment
+            </h2>
+        </div>
+
+    </div>
+
+    <div class="room-controls">
+
+        <label for="topTeamCount">
+            Number of Teams
+        </label>
+
+        <input
+            type="number"
+            id="topTeamCount"
+            min="1"
+            max="50"
+            placeholder="Enter number (1–50)"
+        >
+
+        <button id="generateRoomsButton">
+            🎯 Generate Room Assignment
+        </button>
+
+    </div>
+
+    <div id="roomAssignmentMessage"></div>
+
+    <div class="room-results">
+
+        <div class="room-card">
+            <h3>ROOM 404</h3>
+            <p>
+                Teams:
+                <strong id="room404Count">0</strong>
+            </p>
+
+            <div id="room404Teams"></div>
+        </div>
+
+        <div class="room-card">
+            <h3>ROOM 405</h3>
+            <p>
+                Teams:
+                <strong id="room405Count">0</strong>
+            </p>
+
+            <div id="room405Teams"></div>
+        </div>
+
+    </div>
+
+</section>
 
 
 
@@ -582,7 +649,7 @@
          JAVASCRIPT
     ========================================== -->
 
-    <script src="../js/admin.js"></script>
+    <script src="js/admin.js"></script>
 
 
 </body>

@@ -1350,3 +1350,398 @@ footer {
     min-height: 20px;
     margin-top: 15px;
 }
+/* ==========================================
+   TOP TEAMS & ROOM ASSIGNMENT
+========================================== */
+
+.room-assignment-panel {
+    margin-top: 35px;
+    padding: 30px;
+    border: 1px solid rgba(90, 130, 255, 0.25);
+    border-radius: 18px;
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(40, 100, 255, 0.10),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 10%,
+            rgba(160, 60, 255, 0.10),
+            transparent 35%
+        ),
+        rgba(5, 10, 28, 0.92);
+
+    box-shadow:
+        0 0 35px rgba(30, 80, 255, 0.08),
+        inset 0 0 30px rgba(80, 100, 255, 0.03);
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.room-assignment-panel .panel-header {
+    margin-bottom: 25px;
+}
+
+.room-assignment-panel .panel-tag {
+    color: #00e5ff;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.room-assignment-panel h2 {
+    margin: 8px 0 0;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+
+/* ==========================================
+   CONTROLS
+========================================== */
+
+.room-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 20px;
+
+    border: 1px solid rgba(120, 150, 255, 0.20);
+    border-radius: 14px;
+
+    background: rgba(15, 23, 55, 0.75);
+
+    margin-bottom: 18px;
+}
+
+.room-controls label {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.room-controls input {
+    width: 150px;
+    padding: 13px 16px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(120, 160, 255, 0.35);
+
+    background: rgba(0, 0, 0, 0.35);
+
+    color: white;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    outline: none;
+}
+
+.room-controls input:focus {
+    border-color: #00d9ff;
+
+    box-shadow:
+        0 0 15px rgba(0, 217, 255, 0.25);
+}
+
+#generateRoomsButton {
+    padding: 13px 24px;
+
+    border: none;
+    border-radius: 10px;
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff3f91,
+            #8b4dff,
+            #168cff
+        );
+
+    box-shadow:
+        0 0 20px rgba(100, 80, 255, 0.25);
+
+    transition: 0.25s ease;
+}
+
+#generateRoomsButton:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 30px rgba(100, 100, 255, 0.45);
+}
+
+
+/* ==========================================
+   SUCCESS MESSAGE
+========================================== */
+
+#roomAssignmentMessage {
+    margin-bottom: 22px;
+
+    padding: 15px 20px;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(0, 255, 150, 0.35);
+
+    background: rgba(0, 120, 80, 0.12);
+
+    color: #4dff9d;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 0 18px rgba(0, 255, 150, 0.06);
+}
+
+
+/* ==========================================
+   ROOM RESULTS
+========================================== */
+
+.room-results {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 25px;
+}
+
+
+/* ==========================================
+   ROOM CARD
+========================================== */
+
+.room-card {
+    position: relative;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 35, 80, 0.95),
+            rgba(5, 12, 30, 0.98)
+        );
+
+    border: 1px solid rgba(40, 130, 255, 0.45);
+
+    box-shadow:
+        0 0 30px rgba(20, 100, 255, 0.10);
+
+    overflow: hidden;
+}
+
+.room-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #168cff,
+            #00e5ff
+        );
+}
+
+
+/* ==========================================
+   ROOM 404
+========================================== */
+
+.room-card:first-child {
+    border-color: rgba(0, 130, 255, 0.65);
+
+    box-shadow:
+        0 0 35px rgba(0, 110, 255, 0.12);
+}
+
+.room-card:first-child::before {
+    background:
+        linear-gradient(
+            90deg,
+            #006eff,
+            #00e5ff
+        );
+}
+
+
+/* ==========================================
+   ROOM 405
+========================================== */
+
+.room-card:last-child {
+    border-color: rgba(160, 70, 255, 0.65);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(45, 20, 85, 0.95),
+            rgba(12, 5, 30, 0.98)
+        );
+
+    box-shadow:
+        0 0 35px rgba(160, 60, 255, 0.12);
+}
+
+.room-card:last-child::before {
+    background:
+        linear-gradient(
+            90deg,
+            #8b35ff,
+            #d44cff
+        );
+}
+
+
+/* ==========================================
+   ROOM TITLE
+========================================== */
+
+.room-card h3 {
+    margin: 0;
+
+    font-size: 32px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+.room-card:first-child h3 {
+    color: #20a5ff;
+
+    text-shadow:
+        0 0 15px rgba(0, 150, 255, 0.35);
+}
+
+.room-card:last-child h3 {
+    color: #c05cff;
+
+    text-shadow:
+        0 0 15px rgba(180, 70, 255, 0.35);
+}
+
+.room-card > p {
+    margin: 5px 0 20px;
+
+    color: #aeb9d5;
+
+    font-size: 15px;
+}
+
+.room-card > p strong {
+    color: white;
+    font-size: 18px;
+}
+
+
+/* ==========================================
+   TEAM ROW
+========================================== */
+
+.assigned-team {
+    display: flex;
+
+    align-items: center;
+
+    min-height: 52px;
+
+    margin-top: 10px;
+
+    padding: 10px 14px;
+
+    border-radius: 10px;
+
+    background: rgba(25, 45, 90, 0.65);
+
+    border: 1px solid rgba(100, 140, 220, 0.10);
+
+    color: #edf3ff;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.assigned-team:hover {
+    transform: translateX(4px);
+
+    background: rgba(35, 65, 125, 0.8);
+}
+
+.room-card:last-child .assigned-team {
+    background: rgba(55, 30, 95, 0.65);
+
+    border-color: rgba(180, 100, 255, 0.10);
+}
+
+.room-card:last-child .assigned-team:hover {
+    background: rgba(75, 40, 125, 0.8);
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 900px) {
+
+    .room-results {
+        grid-template-columns: 1fr;
+    }
+
+    .room-controls {
+        flex-wrap: wrap;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .room-assignment-panel {
+        padding: 18px;
+    }
+
+    .room-assignment-panel h2 {
+        font-size: 23px;
+    }
+
+    .room-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .room-controls input {
+        width: auto;
+    }
+
+    #generateRoomsButton {
+        width: 100%;
+    }
+
+}

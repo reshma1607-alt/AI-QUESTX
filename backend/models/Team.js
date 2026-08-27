@@ -55,6 +55,10 @@ const teamSchema = new mongoose.Schema(
         roundActive: {
             type: Boolean,
             default: false
+        },
+         roomNumber: {
+            type: Number,
+            default: null
         }
     },
     {
