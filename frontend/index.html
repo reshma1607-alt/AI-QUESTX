@@ -749,36 +749,119 @@
                         </span>
 
                     </div>
-                    <!-- ==========================================
+<!-- ==========================================
      NEXT ROUND QR
 ========================================== -->
 
-<section id="nextRoundQR" style="display:none;">
+<section id="nextRoundQR" class="qr-reveal-section">
 
-    <h2>🎉 Round Completed!</h2>
+    <div class="qr-completed-header">
 
-    <p>
-        Congratulations! You have completed Round 1.
-    </p>
+        <div class="time-up">
+            ⏰ TIME'S UP — The competition round has ended.
+        </div>
 
-    <div id="qrTeamName"></div>
+        <h2>
+            🎉 Round Completed!
+        </h2>
 
-    <div id="qrCode"></div>
+        <p class="completed-message">
+            Congratulations! You have completed Round 1.
+        </p>
 
-    <p>
-        📱 Scan this QR code to view your room.
-    </p>
+        <div id="qrTeamName" class="qr-team-name"></div>
 
-    <div id="qrStatus"></div>
-
-</section>
+    </div>
 
 
+    <!-- ======================================
+         BIG FUNNY EMOJI
+    ======================================= -->
+
+    <div
+        id="qrRevealBox"
+        class="qr-reveal-box"
+    >
+
+        <div class="funny-emoji">
+            😎
+        </div>
+
+        <div class="emoji-stars">
+            ✨ ⭐ 🎉 ⭐ ✨
+        </div>
+
+        <p class="slide-title">
+            SLIDE THE EMOJI TO REVEAL YOUR QR
+        </p>
+
+
+        <!-- SLIDER -->
+
+        <div
+            id="qrSlider"
+            class="qr-slider"
+        >
+
+            <div class="qr-slider-track">
+
+                <div
+                    id="qrSliderButton"
+                    class="qr-slider-button"
+                >
+                    👉
                 </div>
-
 
             </div>
 
+        </div>
+
+
+        <p class="slide-hint">
+            👉 Slide the emoji to the right
+        </p>
+
+    </div>
+
+
+    <!-- ======================================
+         QR RESULT
+    ======================================= -->
+
+    <div
+        id="qrResult"
+        class="qr-result"
+    >
+
+        <h2>
+            🎉 Your QR Code is Ready! 🎉
+        </h2>
+
+
+        <div
+            id="qrCode"
+            class="qr-code-box"
+        ></div>
+
+
+        <p
+            id="qrStatus"
+            class="qr-status"
+        >
+            📱 Scan this QR code to view your room.
+        </p>
+
+
+        <div class="good-luck">
+
+            😍 <strong>All the best</strong>
+            for the next round! ✨
+
+        </div>
+
+    </div>
+
+</section>              
 
 
             <!-- =================================================

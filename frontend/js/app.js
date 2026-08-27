@@ -756,7 +756,12 @@ function showTeamQR(data) {
         return;
     }
 
+    const qrResult =
+    document.getElementById("qrResult");
 
+if (qrResult) {
+    qrResult.style.display = "none";
+}
     // Show QR section
     qrSection.style.display = "block";
 
@@ -836,3 +841,141 @@ function showTeamQR(data) {
     }
 
 }
+// ==========================================
+// QR EMOJI SLIDER
+// ==========================================
+
+function setupQRSlider() {
+
+    const slider =
+        document.getElementById("qrSlider");
+
+    const button =
+        document.getElementById("qrSliderButton");
+
+    const result =
+        document.getElementById("qrResult");
+
+    if (!slider || !button || !result) {
+        return;
+    }
+
+
+    let dragging = false;
+
+
+    function moveButton(clientX) {
+
+        const rect =
+            slider.getBoundingClientRect();
+
+        const buttonWidth =
+            button.offsetWidth;
+
+        let x =
+            clientX -
+            rect.left -
+            buttonWidth / 2;
+
+
+        const maxX =
+            rect.width -
+            buttonWidth -
+            12;
+
+
+        x =
+            Math.max(
+                0,
+                Math.min(x, maxX)
+            );
+
+
+        button.style.left =
+            `${x}px`;
+
+
+        // Reveal when slider reaches 85%
+        if (
+            x >= maxX * 0.85
+        ) {
+
+            dragging = false;
+
+            button.style.left =
+                `${maxX}px`;
+
+            result.style.display =
+                "block";
+
+            const hint =
+                document.querySelector(
+                    ".slide-hint"
+                );
+
+            if (hint) {
+
+                hint.textContent =
+                    "🎉 QR unlocked! Scan it to view your room.";
+
+            }
+
+        }
+
+    }
+
+
+    button.addEventListener(
+        "pointerdown",
+        event => {
+
+            dragging = true;
+
+            button.setPointerCapture(
+                event.pointerId
+            );
+
+        }
+    );
+
+
+    button.addEventListener(
+        "pointermove",
+        event => {
+
+            if (!dragging) {
+                return;
+            }
+
+            moveButton(
+                event.clientX
+            );
+
+        }
+    );
+
+
+    button.addEventListener(
+        "pointerup",
+        () => {
+
+            dragging = false;
+
+        }
+    );
+
+
+    button.addEventListener(
+        "pointercancel",
+        () => {
+
+            dragging = false;
+
+        }
+    );
+
+}
+
+
+// Start slider when page loads
+setupQRSlider();

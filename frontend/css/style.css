@@ -1687,3 +1687,500 @@ h1 {
     }
 
 }
+/* ==========================================
+   ROUND COMPLETED QR REVEAL
+========================================== */
+
+.qr-reveal-section {
+
+    display: none;
+
+    width: 100%;
+
+    margin-top: 35px;
+
+    padding: 35px 25px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #090d24,
+            #17113b
+        );
+
+    border:
+        1px solid
+        rgba(110, 80, 255, 0.45);
+
+    box-shadow:
+        0 20px 70px
+        rgba(0,0,0,0.45);
+
+    text-align: center;
+
+}
+
+
+/* HEADER */
+
+.qr-completed-header .time-up {
+
+    color: #ff5d7d;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    margin-bottom: 18px;
+
+}
+
+
+.qr-completed-header h1 {
+
+    margin: 5px 0 10px;
+
+    font-size: clamp(38px, 6vw, 65px);
+
+    font-weight: 900;
+
+}
+
+
+.completed-message {
+
+    margin: 0 0 10px;
+
+    font-size: 22px;
+
+}
+
+
+.qr-team-name {
+
+    color: #48dfff;
+
+    font-size: 25px;
+
+    font-weight: 800;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* ==========================================
+   FUNNY EMOJI PANEL
+========================================== */
+
+.qr-reveal-box {
+
+    position: relative;
+
+    max-width: 900px;
+
+    margin: 25px auto;
+
+    padding: 35px 25px 30px;
+
+    border-radius: 25px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(100,60,180,0.28),
+            rgba(5,8,25,0.95)
+        );
+
+    border:
+        2px solid
+        rgba(190,80,255,0.55);
+
+    overflow: hidden;
+
+}
+
+
+.funny-emoji {
+
+    font-size: 170px;
+
+    line-height: 1;
+
+    margin: 5px auto 15px;
+
+    animation:
+        emojiBounce 1.8s infinite;
+
+    filter:
+        drop-shadow(
+            0 0 25px
+            rgba(255,220,50,0.5)
+        );
+
+    user-select: none;
+
+}
+
+
+@keyframes emojiBounce {
+
+    0%,
+    100% {
+        transform: translateY(0)
+                   rotate(-3deg);
+    }
+
+    50% {
+        transform: translateY(-14px)
+                   rotate(3deg);
+    }
+
+}
+
+
+.emoji-stars {
+
+    font-size: 25px;
+
+    letter-spacing: 8px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.slide-title {
+
+    font-size: 20px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 18px;
+
+}
+
+
+/* ==========================================
+   SLIDER
+========================================== */
+
+.qr-slider {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 720px;
+
+    height: 72px;
+
+    margin: auto;
+
+    padding: 6px;
+
+    border-radius: 45px;
+
+    background:
+        rgba(5,5,25,0.8);
+
+    border:
+        2px solid
+        rgba(220,80,255,0.5);
+
+}
+
+
+.qr-slider-track {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+
+.qr-slider-button {
+
+    position: absolute;
+
+    left: 0;
+
+    top: 0;
+
+    width: 60px;
+
+    height: 60px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 32px;
+
+    cursor: grab;
+
+    user-select: none;
+
+    touch-action: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff4f91,
+            #ffb52e
+        );
+
+    box-shadow:
+        0 0 25px
+        rgba(255,80,150,0.65);
+
+}
+
+
+.qr-slider-button:active {
+
+    cursor: grabbing;
+
+    transform: scale(1.08);
+
+}
+
+
+.slide-hint {
+
+    margin-top: 15px;
+
+    opacity: 0.65;
+
+    font-size: 14px;
+
+}
+
+
+/* ==========================================
+   QR RESULT
+========================================== */
+
+.qr-result {
+
+    display: none;
+
+    max-width: 900px;
+
+    margin: 35px auto 0;
+
+    padding: 35px 25px;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #080c25,
+            #161038
+        );
+
+    border:
+        2px solid
+        rgba(50,190,255,0.55);
+
+    box-shadow:
+        0 0 45px
+        rgba(40,170,255,0.16);
+
+}
+
+
+.qr-result h2 {
+
+    font-size: 32px;
+
+    margin: 0 0 25px;
+
+}
+
+
+.qr-result-content {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 50px;
+
+    flex-wrap: wrap;
+
+}
+
+
+/* QR BOX */
+
+.qr-code-box {
+
+    padding: 18px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    box-shadow:
+        0 0 35px
+        rgba(50,210,255,0.5);
+
+}
+
+
+.qr-code-box img,
+.qr-code-box canvas {
+
+    display: block;
+
+    width: 260px !important;
+
+    height: 260px !important;
+
+}
+
+
+/* ==========================================
+   SCAN INSTRUCTIONS
+========================================== */
+
+.qr-instructions {
+
+    min-width: 260px;
+
+    max-width: 330px;
+
+}
+
+
+.scan-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(10,10,40,0.8);
+
+    border:
+        1px solid
+        rgba(150,80,255,0.4);
+
+    text-align: left;
+
+}
+
+
+.scan-icon {
+
+    font-size: 42px;
+
+}
+
+
+.scan-card strong {
+
+    font-size: 20px;
+
+}
+
+
+.scan-card p {
+
+    margin: 5px 0 0;
+
+    opacity: 0.75;
+
+}
+
+
+.good-luck {
+
+    margin-top: 20px;
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    border:
+        1px dashed
+        rgba(180,100,255,0.65);
+
+    font-size: 18px;
+
+    line-height: 1.5;
+
+}
+
+
+.good-luck strong {
+
+    color: #ff5d91;
+
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+
+    .funny-emoji {
+
+        font-size: 120px;
+
+    }
+
+
+    .qr-completed-header h1 {
+
+        font-size: 38px;
+
+    }
+
+
+    .qr-result-content {
+
+        gap: 25px;
+
+    }
+
+
+    .qr-code-box img,
+    .qr-code-box canvas {
+
+        width: 220px !important;
+
+        height: 220px !important;
+
+    }
+
+}

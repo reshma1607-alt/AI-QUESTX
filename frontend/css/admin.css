@@ -1745,3 +1745,113 @@ footer {
     }
 
 }
+/* ==========================================
+   QR DISPLAY
+========================================== */
+
+#qrCode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 25px auto;
+
+    padding: 18px;
+
+    width: fit-content;
+
+    background: white;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 0 30px rgba(0, 220, 255, 0.35);
+}
+
+
+#qrCode img,
+#qrCode canvas {
+    display: block;
+
+    border-radius: 8px;
+}
+
+
+#qrTeamName {
+    margin-top: 10px;
+
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+
+#qrStatus {
+    margin: 12px 0 18px;
+
+    font-size: 17px;
+}
+
+
+/* ==========================================
+   SCANNER BUTTON
+========================================== */
+
+.scanner-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 14px 26px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #08c8ff,
+            #7040ff
+        );
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 150, 255, 0.3);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.scanner-button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(0, 150, 255, 0.45);
+
+}
+
+
+.scanner-button:active {
+
+    transform: scale(0.97);
+
+}
