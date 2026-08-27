@@ -752,6 +752,7 @@ function showTeamQR(data) {
 
 
     if (!qrSection || !qrCode) {
+        console.error("QR elements not found");
         return;
     }
 
@@ -760,29 +761,78 @@ function showTeamQR(data) {
     qrSection.style.display = "block";
 
 
-    // Team information
-    qrTeamName.textContent =
-        `${data.teamId} — ${data.teamName}`;
+    // Show team name
+    if (qrTeamName) {
+
+        qrTeamName.textContent =
+            `${data.teamId} — ${data.teamName || ""}`;
+
+    }
 
 
-    // Clear previous QR
+    // Clear old QR
     qrCode.innerHTML = "";
 
 
-    // QR will contain the team ID
+    // Check QR library
+    if (typeof QRCode === "undefined") {
+
+        console.error(
+            "QRCode library is not loaded"
+        );
+
+        qrStatus.textContent =
+            "❌ QR generator failed to load. Please refresh.";
+
+        return;
+    }
+
+
+    // URL opened after scanning
     const qrData =
         `${window.location.origin}/room.html?teamId=${encodeURIComponent(data.teamId)}`;
 
 
-    // Generate QR
-    new QRCode(qrCode, {
-        text: qrData,
-        width: 220,
-        height: 220
-    });
+    console.log(
+        "Generating QR:",
+        qrData
+    );
 
 
-    qrStatus.textContent =
-        "📱 Scan this QR code to view your room.";
+    // Generate actual QR
+    try {
+
+        new QRCode(qrCode, {
+
+            text: qrData,
+
+            width: 220,
+
+            height: 220,
+
+            correctLevel:
+                QRCode.CorrectLevel.H
+
+        });
+
+
+        if (qrStatus) {
+
+            qrStatus.textContent =
+                "📱 Scan this QR code to view your room.";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "QR generation error:",
+            error
+        );
+
+        qrStatus.textContent =
+            "❌ Unable to generate QR code.";
+
+    }
 
 }
