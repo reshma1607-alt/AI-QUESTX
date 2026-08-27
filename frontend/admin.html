@@ -5,219 +5,188 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>AI QUESTX — Admin Dashboard</title>
+    <title>AI QUESTX - Admin Dashboard</title>
 
-    <link rel="stylesheet"
-          href="css/admin.css">
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
 
 </head>
 
 
 <body>
+
     <!-- =========================================
-     ADMIN LOGIN
-========================================== -->
+         ADMIN LOGIN
+    ========================================== -->
 
-<div id="adminLogin" class="admin-login">
+    <section id="adminLoginSection">
 
-    <div class="login-card">
+        <div class="login-card">
 
-        <div class="brand">
-            ◈ AI QUESTX
+            <div class="panel-tag">
+                AI QUESTX
+            </div>
+
+            <h1>
+                Admin Login
+            </h1>
+
+            <p>
+                Competition Control Panel
+            </p>
+
+
+            <form id="adminLoginForm">
+
+                <div class="form-group">
+
+                    <label for="adminUsername">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="adminUsername"
+                        placeholder="Enter username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="adminPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="adminPassword"
+                        placeholder="Enter password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="loginButton"
+                >
+                    LOGIN
+                </button>
+
+
+                <p id="loginMessage"></p>
+
+            </form>
+
         </div>
 
-        <h1>Admin Login</h1>
-
-        <p>Competition Control Center</p>
-
-        <label for="adminUsername">
-            Username
-        </label>
-
-        <input
-            type="text"
-            id="adminUsername"
-            placeholder="Enter admin username"
-            autocomplete="username"
-        >
-
-        <label for="adminPassword">
-            Password
-        </label>
-
-        <input
-            type="password"
-            id="adminPassword"
-            placeholder="Enter admin password"
-            autocomplete="current-password"
-        >
-
-        <button id="adminLoginButton">
-            LOGIN
-        </button>
-
-        <p id="adminLoginMessage"></p>
-
-    </div>
-
-</div>
-
+    </section>
 
 
     <!-- =========================================
-         BACKGROUND EFFECTS
+         ADMIN DASHBOARD
     ========================================== -->
 
-    <div class="background-glow glow-one"></div>
-    <div class="background-glow glow-two"></div>
+    <main
+        id="adminDashboard"
+        style="display:none;"
+    >
 
-
-    <!-- =========================================
-         MAIN DASHBOARD
-    ========================================== -->
-
-    <main class="dashboard" style="display: none;">
-
-
-        <!-- =====================================
-             HEADER
-        ====================================== -->
+        <!-- HEADER -->
 
         <header class="dashboard-header">
 
             <div>
 
-                <div class="brand">
-                    ◈ AI QUESTX
-                </div>
+                <span class="panel-tag">
+                    AI QUESTX
+                </span>
 
                 <h1>
-                    Competition Control Center
+                    Admin Dashboard
                 </h1>
 
-                <p>
-                    Prompt Masters • University AI Challenge
-                </p>
-
             </div>
 
 
-            <div class="live-status">
-
-                <span class="live-dot"></span>
-
-                LIVE SYSTEM
-
-            </div>
+            <button id="logoutButton">
+                Logout
+            </button>
 
         </header>
-
 
 
         <!-- =====================================
              STATISTICS
         ====================================== -->
 
-        <section class="stats">
-
-
-            <!-- TEAMS -->
+        <section class="statistics-panel">
 
             <div class="stat-card">
 
-                <span class="stat-icon">
-                    👥
+                <span>
+                    TOTAL TEAMS
                 </span>
 
-                <div>
-
-                    <span class="stat-label">
-                        TEAMS
-                    </span>
-
-                    <strong id="totalTeams">
-                        --
-                    </strong>
-
-                </div>
+                <strong id="totalTeams">
+                    0
+                </strong>
 
             </div>
 
 
-            <!-- ACTIVE -->
-
             <div class="stat-card">
 
-                <span class="stat-icon">
-                    🟢
+                <span>
+                    COMPLETED
                 </span>
 
-                <div>
-
-                    <span class="stat-label">
-                        ACTIVE
-                    </span>
-
-                    <strong id="activeTeams">
-                        --
-                    </strong>
-
-                </div>
+                <strong id="completedTeams">
+                    0
+                </strong>
 
             </div>
 
 
-            <!-- TOP SCORE -->
-
             <div class="stat-card">
 
-                <span class="stat-icon">
-                    🏆
+                <span>
+                    TOP SCORE
                 </span>
 
-                <div>
-
-                    <span class="stat-label">
-                        TOP SCORE
-                    </span>
-
-                    <strong id="topScore">
-                        --
-                    </strong>
-
-                </div>
+                <strong id="topScore">
+                    0
+                </strong>
 
             </div>
 
 
-            <!-- ATTEMPTS -->
-
             <div class="stat-card">
 
-                <span class="stat-icon">
-                    📝
+                <span>
+                    AVERAGE SCORE
                 </span>
 
-                <div>
-
-                    <span class="stat-label">
-                        ATTEMPTS
-                    </span>
-
-                    <strong id="totalAttempts">
-                        --
-                    </strong>
-
-                </div>
+                <strong id="averageScore">
+                    0
+                </strong>
 
             </div>
-
 
         </section>
-
 
 
         <!-- =====================================
@@ -225,9 +194,6 @@
         ====================================== -->
 
         <section class="leaderboard-panel">
-
-
-            <!-- PANEL HEADER -->
 
             <div class="panel-header">
 
@@ -245,16 +211,11 @@
 
 
                 <button id="refreshButton">
-
                     ↻ Refresh
-
                 </button>
 
             </div>
 
-
-
-            <!-- TABLE -->
 
             <div class="table-wrapper">
 
@@ -264,29 +225,12 @@
 
                         <tr>
 
-                            <th>
-                                RANK
-                            </th>
-
-                            <th>
-                                TEAM
-                            </th>
-
-                            <th>
-                                SCORE
-                            </th>
-
-                            <th>
-                                ATTEMPTS
-                            </th>
-
-                            <th>
-                                TIME
-                            </th>
-
-                            <th>
-                                STATUS
-                            </th>
+                            <th>RANK</th>
+                            <th>TEAM</th>
+                            <th>SCORE</th>
+                            <th>ATTEMPTS</th>
+                            <th>TIME</th>
+                            <th>STATUS</th>
 
                         </tr>
 
@@ -297,11 +241,11 @@
 
                         <tr>
 
-                            <td colspan="6"
-                                class="loading">
-
+                            <td
+                                colspan="6"
+                                class="loading"
+                            >
                                 🔄 Loading leaderboard...
-
                             </td>
 
                         </tr>
@@ -312,9 +256,6 @@
 
             </div>
 
-
-
-            <!-- LAST UPDATED -->
 
             <div class="last-updated">
 
@@ -328,330 +269,118 @@
 
             </div>
 
-
         </section>
-        <!-- =====================================
-     TOP TEAMS → ROOM ASSIGNMENT
-====================================== -->
-
-<section class="room-assignment-panel">
-
-    <div class="panel-header">
-
-        <div>
-            <span class="panel-tag">
-                NEXT ROUND
-            </span>
-
-            <h2>
-                🏆 Top Teams & Room Assignment
-            </h2>
-        </div>
-
-    </div>
-
-    <div class="room-controls">
-
-        <label for="topTeamCount">
-            Number of Teams
-        </label>
-
-        <input
-            type="number"
-            id="topTeamCount"
-            min="1"
-            max="50"
-            placeholder="Enter number (1–50)"
-        >
-
-        <button id="generateRoomsButton">
-            🎯 Generate Room Assignment
-        </button>
-
-    </div>
-
-    <div id="roomAssignmentMessage"></div>
-
-    <div class="room-results">
-
-        <div class="room-card">
-            <h3>ROOM 404</h3>
-            <p>
-                Teams:
-                <strong id="room404Count">0</strong>
-            </p>
-
-            <div id="room404Teams"></div>
-        </div>
-
-        <div class="room-card">
-            <h3>ROOM 405</h3>
-            <p>
-                Teams:
-                <strong id="room405Count">0</strong>
-            </p>
-
-            <div id="room405Teams"></div>
-        </div>
-
-    </div>
-
-</section>
-
 
 
         <!-- =====================================
-             TEAM DETAILS MODAL
+             ROOM ASSIGNMENT
         ====================================== -->
 
-        <div id="teamModal"
-             class="team-modal">
+        <section class="room-assignment-panel">
 
+            <div class="panel-header">
 
-            <div class="team-modal-card">
-
-
-                <!-- CLOSE BUTTON -->
-
-                <button id="closeTeamModal"
-                        class="close-modal">
-
-                    ✕
-
-                </button>
-
-
-
-                <!-- MODAL HEADER -->
-
-                <div class="modal-header">
+                <div>
 
                     <span class="panel-tag">
-                        TEAM PERFORMANCE
+                        NEXT ROUND
                     </span>
 
-                    <h2 id="modalTeamName">
-                        Team Details
+                    <h2>
+                        🏫 Room Assignment
                     </h2>
 
-                    <p id="modalTeamId">
-                        —
+                </div>
+
+            </div>
+
+
+            <div class="room-controls">
+
+                <label for="topTeamsInput">
+                    Number of Qualified Teams
+                </label>
+
+                <input
+                    type="number"
+                    id="topTeamsInput"
+                    min="1"
+                    max="50"
+                    placeholder="Example: 40"
+                >
+
+                <button id="assignRoomsButton">
+                    🎯 Generate Room Assignment
+                </button>
+
+            </div>
+
+
+            <!-- ROOM 404 -->
+
+            <div class="room-card">
+
+                <div class="room-header">
+
+                    <h3>
+                        ROOM 404
+                    </h3>
+
+                    <span id="room404Count">
+                        0 Teams
+                    </span>
+
+                </div>
+
+
+                <div id="room404Teams">
+
+                    <p class="loading">
+                        No teams assigned yet.
                     </p>
 
                 </div>
 
+            </div>
 
 
-                <!-- TEAM SUMMARY -->
+            <!-- ROOM 405 -->
 
-                <div class="team-summary">
+            <div class="room-card">
 
+                <div class="room-header">
 
-                    <!-- BEST SCORE -->
+                    <h3>
+                        ROOM 405
+                    </h3>
 
-                    <div class="summary-card">
-
-                        <span>
-                            🏆 BEST SCORE
-                        </span>
-
-                        <strong id="modalBestScore">
-                            --
-                        </strong>
-
-                    </div>
-
-
-                    <!-- ATTEMPTS -->
-
-                    <div class="summary-card">
-
-                        <span>
-                            📝 ATTEMPTS
-                        </span>
-
-                        <strong id="modalAttempts">
-                            --
-                        </strong>
-
-                    </div>
-
-
-                    <!-- IMAGE -->
-
-                    <div class="summary-card">
-
-                        <span>
-                            🖼️ IMAGE
-                        </span>
-
-                        <strong id="modalImage">
-                            --
-                        </strong>
-
-                    </div>
-
-
-                    <!-- BEST TIME -->
-
-                    <div class="summary-card">
-
-                        <span>
-                            ⏱️ BEST TIME
-                        </span>
-
-                        <strong id="modalBestTime">
-                            --
-                        </strong>
-
-                    </div>
-
+                    <span id="room405Count">
+                        0 Teams
+                    </span>
 
                 </div>
 
 
+                <div id="room405Teams">
 
-                <!-- =================================
-                     ATTEMPT HISTORY
-                ================================== -->
-
-                <div class="attempt-section">
-                    <!-- =========================================
-     ADMIN TEAM CONTROLS
-========================================= -->
-
-<div class="admin-controls">
-
-    <div class="attempt-title">
-        ⚙️ Competition Controls
-    </div>
-
-    <div class="control-buttons">
-
-        <button
-            id="viewAttemptsButton"
-            class="control-btn view-btn"
-        >
-            📝 View Attempts
-        </button>
-
-        <button
-            id="endRoundButton"
-            class="control-btn end-btn"
-        >
-            ⏹️ End Round
-        </button>
-
-        <button
-            id="lockScoreButton"
-            class="control-btn lock-btn"
-        >
-            🔒 Lock Score
-        </button>
-
-    </div>
-
-</div>
-
-
-                    <div class="attempt-title">
-
-                        📝 Attempt History
-
-                    </div>
-
-
-                    <div class="attempt-table-wrapper">
-
-                        <table>
-
-                            <thead>
-
-                                <tr>
-
-                                    <th>
-                                        #
-                                    </th>
-
-                                    <th>
-                                        SCORE
-                                    </th>
-
-                                    <th>
-                                        TIME
-                                    </th>
-
-                                    <th>
-                                        BEST
-                                    </th>
-
-                                </tr>
-
-                            </thead>
-
-
-                            <tbody id="attemptBody">
-
-                                <tr>
-
-                                    <td colspan="4"
-                                        class="loading">
-
-                                        Loading attempts...
-
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
+                    <p class="loading">
+                        No teams assigned yet.
+                    </p>
 
                 </div>
-
-
 
             </div>
 
-        </div>
-
-
-
-        <!-- =====================================
-             FOOTER
-        ====================================== -->
-
-        <footer>
-
-            <span>
-                ◈ AI QUESTX
-            </span>
-
-            <span>
-                ADMIN CONTROL CENTER
-            </span>
-
-            <span>
-                🔒 SECURE COMPETITION SYSTEM
-            </span>
-
-        </footer>
-
+        </section>
 
     </main>
-
 
 
     <!-- =========================================
          JAVASCRIPT
     ========================================== -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="js/app.js"></script>
-
+    <script src="js/admin.js"></script>
 
 </body>
 
