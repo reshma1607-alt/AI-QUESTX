@@ -1313,10 +1313,16 @@ function updateLiveTimers() {
 // ==========================================
 
 // Refresh leaderboard data every 10 seconds
-setInterval(
-    loadLeaderboard,
-    10000
-);
+setInterval(() => {
+
+    if (
+        adminUsername &&
+        adminPassword
+    ) {
+        loadLeaderboard();
+    }
+
+}, 10000);
 
 // Update visible LIVE timers every second
 setInterval(
