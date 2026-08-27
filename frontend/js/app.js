@@ -305,34 +305,88 @@ function endCompetition() {
     clearInterval(timerInterval);
 
     if (syncTimeout) {
-
         clearTimeout(syncTimeout);
-
     }
-
 
     remainingSeconds = 0;
 
     updateTimer();
 
-
-    evaluateButton.disabled =
-        true;
-
-    promptInput.disabled =
-        true;
-
+    evaluateButton.disabled = true;
+    promptInput.disabled = true;
 
     resultMessage.textContent =
         "TIME'S UP — The competition round has ended.";
 
-
     resultMessage.style.color =
         "#ff667a";
+
+    // Start checking for QR
+    startQRStatusCheck();
+}
+
+
+// ==========================================
+// CHECK WHETHER ADMIN SENT QR
+// ==========================================
+
+let qrCheckInterval = null;
+
+
+function startQRStatusCheck() {
+
+    clearInterval(qrCheckInterval);
+
+    checkQRStatus();
+
+    qrCheckInterval = setInterval(
+        checkQRStatus,
+        3000
+    );
 
 }
 
 
+async function checkQRStatus() {
+
+    if (!teamId) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/api/competition/qr-status/${encodeURIComponent(teamId)}`
+        );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+            return;
+        }
+
+        if (
+            data.success &&
+            data.qrSent === true
+        ) {
+
+            clearInterval(qrCheckInterval);
+
+            showTeamQR(data);
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "QR status error:",
+            error
+        );
+
+    }
+
+}
 // ===============================
 // EVALUATE PROMPT
 // ===============================
@@ -678,3 +732,57 @@ teamIdInput.addEventListener(
 
     }
 );
+// ==========================================
+// SHOW TEAM QR
+// ==========================================
+
+function showTeamQR(data) {
+
+    const qrSection =
+        document.getElementById("nextRoundQR");
+
+    const qrTeamName =
+        document.getElementById("qrTeamName");
+
+    const qrCode =
+        document.getElementById("qrCode");
+
+    const qrStatus =
+        document.getElementById("qrStatus");
+
+
+    if (!qrSection || !qrCode) {
+        return;
+    }
+
+
+    // Show QR section
+    qrSection.style.display = "block";
+
+
+    // Team information
+    qrTeamName.textContent =
+        `${data.teamId} — ${data.teamName}`;
+
+
+    // Clear previous QR
+    qrCode.innerHTML = "";
+
+
+    // QR will contain the team ID
+    const qrData =
+        `${window.location.origin}/room.html?teamId=${encodeURIComponent(data.teamId)}`;
+
+
+    // Generate QR
+    new QRCode(qrCode, {
+        text: qrData,
+        width: 220,
+        height: 220
+    });
+
+
+    qrStatus.textContent =
+        "📱 Scan this QR code to view your room.";
+
+}

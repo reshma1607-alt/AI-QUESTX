@@ -507,6 +507,64 @@ router.get(
 
     }
 );
+// ==========================================
+// CHECK QR STATUS FOR TEAM
+// ==========================================
+
+router.get("/qr-status/:teamId", async (req, res) => {
+
+    try {
+
+        const teamId =
+            req.params.teamId.toUpperCase();
+
+        const team =
+            await Team.findOne({ teamId });
+
+        if (!team) {
+
+            return res.status(404).json({
+                success: false,
+                message: "Team not found"
+            });
+
+        }
+
+        res.json({
+
+            success: true,
+
+            teamId: team.teamId,
+
+            teamName: team.teamName,
+
+            qrSent:
+                team.qrSent === true,
+
+            roomNumber:
+                team.roomNumber || null
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "QR status error:",
+            error
+        );
+
+        res.status(500).json({
+
+            success: false,
+
+            message:
+                "Unable to check QR status"
+
+        });
+
+    }
+
+});
 
 
 module.exports = router;

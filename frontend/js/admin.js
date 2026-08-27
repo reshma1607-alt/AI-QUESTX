@@ -1459,10 +1459,29 @@ if (generateRoomsButton) {
                         div.className =
                             "assigned-team";
 
-                        div.textContent =
-                            `${index + 1}. ${team.teamId} — ${team.teamName} — ${team.score}/100`;
+                        div.innerHTML = `
+    <span>
+        ${index + 1}. ${escapeHtml(team.teamId)}
+        — ${escapeHtml(team.teamName)}
+        — ${team.score}/100
+    </span>
 
-                        room404Teams.appendChild(div);
+    <button
+        class="send-qr-button"
+        data-team-id="${escapeHtml(team.teamId)}"
+    >
+        📲 SEND QR
+    </button>
+`;
+
+room404Teams.appendChild(div);
+
+const sendButton =
+    div.querySelector(".send-qr-button");
+
+sendButton.addEventListener("click", () => {
+    sendQR(team.teamId, sendButton);
+});
 
                     }
                 );
@@ -1481,10 +1500,29 @@ if (generateRoomsButton) {
                         div.className =
                             "assigned-team";
 
-                        div.textContent =
-                            `${index + 1}. ${team.teamId} — ${team.teamName} — ${team.score}/100`;
+                        div.innerHTML = `
+    <span>
+        ${index + 1}. ${escapeHtml(team.teamId)}
+        — ${escapeHtml(team.teamName)}
+        — ${team.score}/100
+    </span>
 
-                        room405Teams.appendChild(div);
+    <button
+        class="send-qr-button"
+        data-team-id="${escapeHtml(team.teamId)}"
+    >
+        📲 SEND QR
+    </button>
+`;
+
+room405Teams.appendChild(div);
+
+const sendButton =
+    div.querySelector(".send-qr-button");
+
+sendButton.addEventListener("click", () => {
+    sendQR(team.teamId, sendButton);
+});
 
                     }
                 );
@@ -1531,4 +1569,61 @@ if (generateRoomsButton) {
         }
     );
 
+}
+// ==========================================
+// SEND QR
+// ==========================================
+
+async function sendQR(teamId, button) {
+
+    try {
+
+        button.disabled = true;
+        button.textContent = "⏳ Sending...";
+
+        const response = await fetch(
+            `${API_URL}/api/admin/send-qr/${encodeURIComponent(teamId)}`,
+            {
+                method: "POST",
+
+                headers: {
+                    "x-admin-username":
+                        adminUsername,
+
+                    "x-admin-password":
+                        adminPassword
+                }
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if (!response.ok || !data.success) {
+
+            throw new Error(
+                data.message ||
+                "Unable to send QR"
+            );
+        }
+
+        button.textContent = "✅ QR SENT";
+
+        button.classList.add("qr-sent");
+
+    } catch (error) {
+
+        console.error(
+            "Send QR error:",
+            error
+        );
+
+        button.textContent = "❌ FAILED";
+
+        alert(
+            `Unable to send QR: ${error.message}`
+        );
+
+        button.disabled = false;
+    }
 }

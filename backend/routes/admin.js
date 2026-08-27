@@ -360,5 +360,62 @@ router.post("/assign-rooms", async (req, res) => {
     }
 
 });
+// ==========================================
+// SEND QR TO QUALIFIED TEAM
+// ==========================================
+
+router.post("/send-qr/:teamId", async (req, res) => {
+
+    try {
+
+        const { teamId } = req.params;
+
+        // Find the team
+        const team = await Team.findOne({
+            teamId: teamId.toUpperCase()
+        });
+
+        if (!team) {
+            return res.status(404).json({
+                success: false,
+                message: "Team not found"
+            });
+        }
+
+        // Team must have a room
+        if (!team.roomNumber) {
+            return res.status(400).json({
+                success: false,
+                message: "Room has not been assigned to this team"
+            });
+        }
+
+        // Mark QR as sent
+        team.qrSent = true;
+
+        await team.save();
+
+        res.json({
+            success: true,
+            message: "QR sent successfully",
+            teamId: team.teamId,
+            roomNumber: team.roomNumber,
+            qrSent: true
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Send QR error:",
+            error
+        );
+
+        res.status(500).json({
+            success: false,
+            message: "Unable to send QR"
+        });
+    }
+
+});
 
 module.exports = router;

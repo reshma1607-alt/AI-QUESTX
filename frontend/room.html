@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AI QUESTX - Room</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #080b18,
+                    #101936
+                );
+
+            color: white;
+
+            text-align: center;
+
+        }
+
+        .room-card {
+
+            width: 90%;
+
+            max-width: 500px;
+
+            padding: 45px 30px;
+
+            border-radius: 25px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.15);
+
+            box-shadow:
+                0 20px 60px
+                rgba(0,0,0,0.4);
+
+        }
+
+        .logo {
+
+            font-size: 20px;
+
+            letter-spacing: 4px;
+
+            margin-bottom: 25px;
+
+        }
+
+        h1 {
+
+            font-size: 32px;
+
+            margin: 10px 0;
+
+        }
+
+        .team {
+
+            font-size: 18px;
+
+            opacity: 0.8;
+
+            margin-bottom: 30px;
+
+        }
+
+        .label {
+
+            font-size: 16px;
+
+            letter-spacing: 3px;
+
+            opacity: 0.7;
+
+            margin-bottom: 10px;
+
+        }
+
+        .room-number {
+
+            font-size: 100px;
+
+            font-weight: bold;
+
+            margin: 10px 0 20px;
+
+        }
+
+        .message {
+
+            font-size: 18px;
+
+            line-height: 1.5;
+
+        }
+
+        .error {
+
+            color: #ff667a;
+
+            font-size: 18px;
+
+        }
+
+        .loading {
+
+            font-size: 20px;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="room-card">
+
+        <div class="logo">
+            AI QUESTX
+        </div>
+
+        <div id="content">
+
+            <div class="loading">
+                🔄 Loading room...
+            </div>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+const API_URL =
+    "https://ai-questx.onrender.com";
+
+
+async function loadRoom() {
+
+    const content =
+        document.getElementById("content");
+
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const teamId =
+        params.get("teamId");
+
+
+    if (!teamId) {
+
+        content.innerHTML = `
+            <div class="error">
+                ❌ Invalid QR code
+            </div>
+        `;
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/competition/qr-status/${encodeURIComponent(teamId)}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load room"
+            );
+
+        }
+
+
+        if (!data.qrSent) {
+
+            content.innerHTML = `
+
+                <h1>
+                    QR Not Activated
+                </h1>
+
+                <div class="team">
+                    ${data.teamId}
+                </div>
+
+                <p class="message">
+                    Your QR code has not been
+                    activated yet.
+                </p>
+
+            `;
+
+            return;
+        }
+
+
+        if (!data.roomNumber) {
+
+            content.innerHTML = `
+
+                <h1>
+                    Room Not Assigned
+                </h1>
+
+                <div class="team">
+                    ${data.teamId}
+                </div>
+
+                <p class="message">
+                    Please contact the admin.
+                </p>
+
+            `;
+
+            return;
+        }
+
+
+        content.innerHTML = `
+
+            <h1>
+                🎉 Congratulations!
+            </h1>
+
+            <div class="team">
+                ${data.teamId}
+                —
+                ${data.teamName}
+            </div>
+
+            <div class="label">
+                YOUR ROOM
+            </div>
+
+            <div class="room-number">
+                ${data.roomNumber}
+            </div>
+
+            <div class="message">
+                Please proceed to
+                <strong>
+                    Room ${data.roomNumber}
+                </strong>.
+            </div>
+
+        `;
+
+
+    } catch (error) {
+
+        console.error(
+            "Room loading error:",
+            error
+        );
+
+
+        content.innerHTML = `
+
+            <div class="error">
+
+                ❌ Unable to load room
+
+                <br><br>
+
+                Please try scanning
+                the QR code again.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+loadRoom();
+
+</script>
+
+</body>
+
+</html>

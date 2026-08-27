@@ -59,7 +59,12 @@ const teamSchema = new mongoose.Schema(
          roomNumber: {
             type: Number,
             default: null
-        }
+        },
+        qrSent: {
+    type: Boolean,
+    default: false
+}
+
     },
     {
         timestamps: true
