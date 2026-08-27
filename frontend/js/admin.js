@@ -1,5 +1,24 @@
 const API_URL = "https://ai-questx.onrender.com";
+// ==========================================
+// TEAM DEVICE REGISTRATION
+// ==========================================
 
+let currentTeamId = "";
+
+function registerTeamDevice(teamId) {
+
+    currentTeamId = teamId;
+
+    localStorage.setItem(
+        "aiQuestxTeamId",
+        teamId
+    );
+
+    console.log(
+        "Team device registered:",
+        teamId
+    );
+}
 // ==========================================
 // ADMIN LOGIN
 // ==========================================

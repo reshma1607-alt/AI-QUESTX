@@ -3,6 +3,52 @@ const Team = require("../models/Team");
 const Image = require("../models/Image");
 
 const router = express.Router();
+// ==========================================
+// CONNECT TEAM DEVICE
+// ==========================================
+
+router.post("/connect-device", async (req, res) => {
+
+    try {
+
+        const { teamId } = req.body;
+
+        if (!teamId) {
+            return res.status(400).json({
+                success: false,
+                message: "Team ID is required"
+            });
+        }
+
+        const team = await Team.findOne({ teamId });
+
+        if (!team) {
+            return res.status(404).json({
+                success: false,
+                message: "Team not found"
+            });
+        }
+
+        res.json({
+            success: true,
+            message: "Team device connected",
+            teamId: team.teamId
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Connect device error:",
+            error
+        );
+
+        res.status(500).json({
+            success: false,
+            message: "Unable to connect team device"
+        });
+    }
+
+});
 
 const ROUND_DURATION_SECONDS = 10 * 60;
 

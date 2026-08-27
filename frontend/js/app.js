@@ -28,19 +28,14 @@ const timer =
 
 const promptInput =
     document.getElementById("promptInput");
-
 const evaluateButton =
     document.getElementById("evaluateButton");
-
 const scoreElement =
     document.getElementById("score");
-
 const bestScoreElement =
     document.getElementById("bestScore");
-
 const resultMessage =
     document.getElementById("resultMessage");
-
 const characterCount =
     document.getElementById("characterCount");
 
@@ -72,6 +67,10 @@ async function startRound() {
     teamId =
         teamIdInput.value.trim().toUpperCase();
 
+    localStorage.setItem(
+    "aiQuestxTeamId",
+    teamId
+);
 
     if (!teamId) {
 
@@ -80,6 +79,26 @@ async function startRound() {
 
         return;
     }
+
+// ==========================================
+// CONNECT TEAM DEVICE
+// ==========================================
+
+await fetch(
+    `${API_URL}/api/competition/connect-device`,
+    {
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            teamId: teamId
+        })
+    }
+);
+
 
 
     startButton.disabled = true;
