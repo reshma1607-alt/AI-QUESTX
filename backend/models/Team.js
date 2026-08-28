@@ -60,6 +60,10 @@ const teamSchema = new mongoose.Schema(
             type: Number,
             default: null
         },
+        systemNumber: {
+    type: Number,
+    default: null
+},
         qrSent: {
     type: Boolean,
     default: false

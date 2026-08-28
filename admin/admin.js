@@ -1,5 +1,4 @@
-const API_URL = "https://ai-questx.onrender.com";
-
+const API_URL = "http://192.168.29.110:5000";
 let adminUsername = "";
 let adminPassword = "";
 
@@ -428,16 +427,7 @@ const roomAssignmentMessage =
 
 generateRoomsButton.addEventListener("click", async () => {
 
-    const count = Number(topTeamCountInput.value);
-
-    // Validate number
-    if (!count || count < 1 || count > 50) {
-
-        roomAssignmentMessage.textContent =
-            "Please enter a number between 1 and 50.";
-
-        return;
-    }
+    const count = 30;
 
     try {
 
@@ -475,6 +465,37 @@ generateRoomsButton.addEventListener("click", async () => {
 
             return;
         }
+        // --------------------------------------
+// SAVE TOP 30 TO DATABASE
+// --------------------------------------
+
+const assignmentResponse = await fetch(
+    `${API_URL}/api/admin/assign-rooms`,
+    {
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json",
+            "x-admin-username": adminUsername,
+            "x-admin-password": adminPassword
+        },
+
+        body: JSON.stringify({
+            count: 30
+        })
+    }
+);
+
+const assignmentData =
+    await assignmentResponse.json();
+
+if (!assignmentResponse.ok) {
+
+    throw new Error(
+        assignmentData.message ||
+        "Unable to assign rooms"
+    );
+}
 
         // Take requested number of top teams
         const topTeams = teams
@@ -506,35 +527,54 @@ generateRoomsButton.addEventListener("click", async () => {
         );
 
 
-        // Display Room 404
-        teams404.forEach((team, index) => {
+       // Display Room 404
+teams404.forEach((team, index) => {
 
-            const div = document.createElement("div");
+    const div = document.createElement("div");
 
-            div.className = "assigned-team";
+    div.className = "assigned-team";
 
-            div.textContent =
-                `${index + 1}. ${team.teamId} — ${team.teamName}`;
+    const systemNumbers = [
+        3, 16, 27, 40, 49,
+        52, 61, 64, 6, 21,
+        32, 44, 56, 59, 69
+    ];
 
-            room404Teams.appendChild(div);
-        });
+    const systemNumber =
+        systemNumbers[index];
+
+    div.textContent =
+        `${index + 1}. ${team.teamId} — ${team.teamName} — System ${systemNumber}`;
+
+    room404Teams.appendChild(div);
+});
 
 
         // Display Room 405
-        teams405.forEach((team, index) => {
+teams405.forEach((team, index) => {
 
-            const div = document.createElement("div");
+    const div = document.createElement("div");
 
-            div.className = "assigned-team";
+    div.className = "assigned-team";
 
-            div.textContent =
-                `${index + 1}. ${team.teamId} — ${team.teamName}`;
+    const systemNumbers = [
+        3, 16, 27, 40, 49,
+        52, 61, 64, 6, 21,
+        32, 44, 56, 59, 69
+    ];
 
-            room405Teams.appendChild(div);
-        });
+    const systemNumber =
+        systemNumbers[index];
+
+    div.textContent =
+        `${index + 1}. ${team.teamId} — ${team.teamName} — System ${systemNumber}`;
+
+    room405Teams.appendChild(div);
+});
 
 
         // Update counts
+
         room404Count.textContent =
             teams404.length;
 
@@ -557,3 +597,94 @@ generateRoomsButton.addEventListener("click", async () => {
     }
 
 });
+// ==========================================
+// END TEST
+// ==========================================
+
+const endTestButton =
+    document.getElementById("endTestButton");
+
+const endTestMessage =
+    document.getElementById("endTestMessage");
+
+
+if (endTestButton) {
+
+    endTestButton.addEventListener(
+        "click",
+        async () => {
+
+            const confirmed =
+                confirm(
+                    "Are you sure you want to end the test for all teams?"
+                );
+
+            if (!confirmed) {
+                return;
+            }
+
+            endTestButton.disabled = true;
+
+            endTestMessage.textContent =
+                "Ending test...";
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_URL}/api/admin/end-test`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+
+                                "x-admin-username":
+                                    adminUsername,
+
+                                "x-admin-password":
+                                    adminPassword
+                            }
+                        }
+                    );
+
+                const data =
+                    await response.json();
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to end test"
+                    );
+                }
+
+                endTestMessage.textContent =
+                    "✅ Test ended successfully.";
+
+                endTestMessage.style.color =
+                    "#5df2a4";
+
+            } catch (error) {
+
+                console.error(
+                    "End test error:",
+                    error
+                );
+
+                endTestMessage.textContent =
+                    error.message ||
+                    "Unable to end test.";
+
+                endTestMessage.style.color =
+                    "#ff667a";
+
+                endTestButton.disabled =
+                    false;
+            }
+
+        }
+    );
+
+}

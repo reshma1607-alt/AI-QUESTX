@@ -30,9 +30,7 @@
 
             align-items: center;
 
-            font-family:
-                Arial,
-                sans-serif;
+            font-family: Arial, sans-serif;
 
             background:
                 linear-gradient(
@@ -94,7 +92,7 @@
 
             opacity: 0.8;
 
-            margin-bottom: 30px;
+            margin-bottom: 25px;
 
         }
 
@@ -112,11 +110,52 @@
 
         .room-number {
 
-            font-size: 100px;
+            font-size: 80px;
 
             font-weight: bold;
 
             margin: 10px 0 20px;
+
+        }
+
+        .system-number-box {
+
+            margin-top: 30px;
+
+            padding: 20px;
+
+            border: 2px solid #63ff6b;
+
+            border-radius: 18px;
+
+            background:
+                rgba(20, 30, 40, 0.7);
+
+            box-shadow:
+                0 0 18px
+                rgba(99, 255, 107, 0.15);
+
+        }
+
+        .system-label {
+
+            font-size: 14px;
+
+            letter-spacing: 4px;
+
+            color: #63ff6b;
+
+            margin-bottom: 10px;
+
+        }
+
+        .system-value {
+
+            font-size: 30px;
+
+            font-weight: bold;
+
+            color: #63ff6b;
 
         }
 
@@ -169,7 +208,7 @@
 <script>
 
 const API_URL =
-    "https://ai-questx.onrender.com";
+    "http://192.168.29.110:5000";
 
 
 async function loadRoom() {
@@ -191,12 +230,17 @@ async function loadRoom() {
     if (!teamId) {
 
         content.innerHTML = `
+
             <div class="error">
+
                 ❌ Invalid QR code
+
             </div>
+
         `;
 
         return;
+
     }
 
 
@@ -212,18 +256,37 @@ async function loadRoom() {
             await response.json();
 
 
-        if (
-            !response.ok ||
-            !data.success
-        ) {
+        console.log(
+            "QR STATUS:",
+            data
+        );
+
+
+        if (!response.ok) {
 
             throw new Error(
                 data.message ||
-                "Unable to load room"
+                "Server error"
             );
 
         }
 
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load team"
+            );
+
+        }
+
+
+        /*
+        ==========================================
+        QR NOT SENT
+        ==========================================
+        */
 
         if (!data.qrSent) {
 
@@ -234,21 +297,33 @@ async function loadRoom() {
                 </h1>
 
                 <div class="team">
-                    ${data.teamId}
+                    Team: ${data.teamId}
                 </div>
 
                 <p class="message">
-                    Your QR code has not been
-                    activated yet.
+
+                    Your QR code has not
+                    been activated yet.
+
                 </p>
 
             `;
 
             return;
+
         }
 
 
-        if (!data.roomNumber) {
+        /*
+        ==========================================
+        ROOM NOT ASSIGNED
+        ==========================================
+        */
+
+        if (
+            data.roomNumber === null ||
+            data.roomNumber === undefined
+        ) {
 
             content.innerHTML = `
 
@@ -257,18 +332,27 @@ async function loadRoom() {
                 </h1>
 
                 <div class="team">
-                    ${data.teamId}
+                    Team: ${data.teamId}
                 </div>
 
                 <p class="message">
+
                     Please contact the admin.
+
                 </p>
 
             `;
 
             return;
+
         }
 
+
+        /*
+        ==========================================
+        SUCCESS
+        ==========================================
+        */
 
         content.innerHTML = `
 
@@ -277,30 +361,60 @@ async function loadRoom() {
             </h1>
 
             <div class="team">
-                ${data.teamId}
-                —
-                ${data.teamName}
+
+                Team:
+                <strong>
+                    ${data.teamId}
+                </strong>
+
+                <br>
+
+                ${data.teamName || ""}
+
             </div>
+
 
             <div class="label">
                 YOUR ROOM
             </div>
 
+
             <div class="room-number">
+
                 ${data.roomNumber}
+
             </div>
 
-            <div class="message">
-                Please proceed to
-                <strong>
-                    Room ${data.roomNumber}
-                </strong>.
+
+            <div class="system-number-box">
+
+                <div class="system-label">
+                    YOUR SYSTEM
+                </div>
+
+                <div class="system-value">
+
+                    🖥️ System
+                    ${data.systemNumber ?? "--"}
+
+                </div>
+
             </div>
+
+
+            <p class="message">
+
+                Please proceed to your assigned
+                room and system.
+
+            </p>
 
         `;
 
+    }
 
-    } catch (error) {
+
+    catch (error) {
 
         console.error(
             "Room loading error:",
@@ -316,8 +430,7 @@ async function loadRoom() {
 
                 <br><br>
 
-                Please try scanning
-                the QR code again.
+                ${error.message}
 
             </div>
 

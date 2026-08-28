@@ -1,5 +1,4 @@
-const API_URL = "https://ai-questx.onrender.com";
-
+const API_URL = "http://192.168.29.110:5000";
 let teamId = null;
 let timerInterval = null;
 let syncTimeout = null;
@@ -157,11 +156,18 @@ await fetch(
         // ===============================
 
         if (data.filename) {
+    const imagePath = `/frontend/photos/${data.filename}`;
 
-            competitionImage.src =
-                `../photos/${data.filename}`;
+    competitionImage.src = imagePath;
 
-        }
+    competitionImage.onerror = function () {
+        console.error("IMAGE FAILED:", imagePath);
+    };
+
+    competitionImage.onload = function () {
+        console.log("IMAGE LOADED:", imagePath);
+    };
+}
 
 
         // ===============================
@@ -795,8 +801,7 @@ if (qrResult) {
 
     // URL opened after scanning
     const qrData =
-        `${window.location.origin}/room.html?teamId=${encodeURIComponent(data.teamId)}`;
-
+    `http://192.168.29.110:5500/frontend/room.html?teamId=${encodeURIComponent(data.teamId)}`;
 
     console.log(
         "Generating QR:",

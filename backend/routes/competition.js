@@ -4,6 +4,58 @@ const Image = require("../models/Image");
 
 const router = express.Router();
 // ==========================================
+// TOP 30 ROOM + SYSTEM ASSIGNMENT
+// ==========================================
+
+const SYSTEM_NUMBERS = [
+    3, 16, 27, 40, 49,
+    52, 61, 64, 6, 21,
+    32, 44, 56, 59, 69
+];
+
+
+async function assignTop30RoomsAndSystems() {
+
+    // Get all teams sorted by best score
+    const teams = await Team.find({})
+        .sort({
+            bestScore: -1,
+            bestScoreAchievedAt: 1
+        });
+
+    // Only top 30 qualify
+    const top30 = teams.slice(0, 30);
+
+    for (let i = 0; i < top30.length; i++) {
+
+        const team = top30[i];
+
+        // Rank 1-15 → Room 404
+        // Rank 16-30 → Room 405
+        const roomNumber =
+            i < 15 ? 404 : 405;
+
+        // System position inside the room
+        const systemIndex =
+            i < 15 ? i : i - 15;
+
+        const systemNumber =
+            SYSTEM_NUMBERS[systemIndex];
+
+        team.roomNumber = roomNumber;
+        team.systemNumber = systemNumber;
+        team.qrSent = true;
+
+        await team.save();
+
+        console.log(
+            `Rank ${i + 1}: ${team.teamId} → Room ${roomNumber} → System ${systemNumber}`
+        );
+    }
+
+    return top30;
+}
+// ==========================================
 // CONNECT TEAM DEVICE
 // ==========================================
 
@@ -532,19 +584,22 @@ router.get("/qr-status/:teamId", async (req, res) => {
 
         res.json({
 
-            success: true,
+    success: true,
 
-            teamId: team.teamId,
+    teamId: team.teamId,
 
-            teamName: team.teamName,
+    teamName: team.teamName,
 
-            qrSent:
-                team.qrSent === true,
+    qrSent:
+        team.qrSent === true,
 
-            roomNumber:
-                team.roomNumber || null
+    roomNumber:
+        team.roomNumber || null,
 
-        });
+    systemNumber:
+        team.systemNumber || null
+
+});
 
     } catch (error) {
 

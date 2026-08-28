@@ -2184,3 +2184,58 @@ h1 {
     }
 
 }
+/* ==========================================
+   SYSTEM NUMBER
+========================================== */
+
+.system-number-box {
+    margin: 35px auto 0;
+    padding: 22px 20px;
+    max-width: 520px;
+
+    border: 2px solid #63ff6b;
+    border-radius: 18px;
+
+    background: rgba(20, 30, 40, 0.65);
+
+    text-align: center;
+
+    box-shadow:
+        0 0 15px rgba(99, 255, 107, 0.12);
+}
+
+.system-label {
+    font-size: 15px;
+    letter-spacing: 4px;
+    color: #63ff6b;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.system-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #63ff6b;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+@media (max-width: 600px) {
+
+    .system-number-box {
+        margin-top: 28px;
+        padding: 18px 15px;
+    }
+
+    .system-label {
+        font-size: 13px;
+        letter-spacing: 3px;
+    }
+
+    .system-value {
+        font-size: 27px;
+    }
+}

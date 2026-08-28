@@ -1,4 +1,4 @@
-const API_URL = "https://ai-questx.onrender.com";
+const API_URL = "http://192.168.29.110:5000";
 // ==========================================
 // TEAM DEVICE REGISTRATION
 // ==========================================

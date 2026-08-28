@@ -140,3 +140,99 @@ tr:hover {
         white-space: nowrap;
     }
 }
+/* ==========================================
+   TOP 30 ROOM ASSIGNMENT
+========================================== */
+
+#roomAssignmentSection {
+    margin-top: 40px;
+}
+
+#roomAssignmentSection h2 {
+    margin-bottom: 20px;
+}
+
+#generateRoomsButton {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background: #00d9ff;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+#generateRoomsButton:hover {
+    opacity: 0.85;
+}
+
+#roomAssignmentMessage {
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+.room-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.room-card {
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(20, 30, 50, 0.8);
+    border: 1px solid rgba(0, 217, 255, 0.3);
+}
+
+.room-card h3 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.room-card > p {
+    margin-bottom: 20px;
+}
+
+.assigned-team {
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 700px) {
+
+    .room-container {
+        grid-template-columns: 1fr;
+    }
+
+}
+/* END TEST BUTTON */
+
+.admin-controls {
+    margin: 25px 0;
+    padding: 20px;
+    text-align: center;
+}
+
+#endTestButton {
+    display: inline-block;
+    padding: 14px 35px;
+    background: #e5395f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#endTestButton:hover {
+    opacity: 0.85;
+}
+
+#endTestMessage {
+    margin-top: 10px;
+}
