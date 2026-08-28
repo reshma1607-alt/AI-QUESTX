@@ -37,21 +37,30 @@ function conceptMatches(prompt, concept) {
         return true;
     }
 
+    // Collapsed spaces (e.g. "light house" matches "lighthouse")
+    const collapsedPrompt = normalizedPrompt.replace(/\s+/g, "");
+    const collapsedConcept = normalizedConcept.replace(/\s+/g, "");
+    if (collapsedPrompt.includes(collapsedConcept)) {
+        return true;
+    }
+
     // Individual words
-    const conceptWords = normalizedConcept.split(" ");
+    const conceptWords = normalizedConcept.split(" ").filter(w => w.length > 1);
+
+    if (conceptWords.length === 0) return false;
 
     const matchedWords = conceptWords.filter(word =>
         normalizedPrompt.includes(word)
     );
 
-    // For a multi-word concept, require most words
+    // For a multi-word concept, require at least half words
     if (conceptWords.length > 1) {
         return matchedWords.length >= Math.ceil(
-            conceptWords.length * 0.6
+            conceptWords.length * 0.5
         );
     }
 
-    return false;
+    return matchedWords.length > 0;
 }
 
 
@@ -227,65 +236,35 @@ if (
 
 
         // ==========================================
-        // CATEGORY SCORING
+        // CATEGORY & KEYWORD SCORING
         // ==========================================
 
-        // Objects → 40 points
-        const objectScore = calculateCategoryScore(
-            prompt,
-            image.objects,
-            40
-        );
+        const hasCategories = (Array.isArray(image.objects) && image.objects.length > 0) ||
+                              (Array.isArray(image.scene) && image.scene.length > 0) ||
+                              (Array.isArray(image.colors) && image.colors.length > 0) ||
+                              (Array.isArray(image.details) && image.details.length > 0);
 
+        let score = 0;
 
-        // Scene → 25 points
-        const sceneScore = calculateCategoryScore(
-            prompt,
-            image.scene,
-            25
-        );
+        if (hasCategories) {
+            // Objects → 40 points
+            const objectScore = calculateCategoryScore(prompt, image.objects, 40);
+            // Scene → 25 points
+            const sceneScore = calculateCategoryScore(prompt, image.scene, 25);
+            // Colors → 15 points
+            const colorScore = calculateCategoryScore(prompt, image.colors, 15);
+            // Details → 10 points
+            const detailScore = calculateCategoryScore(prompt, image.details, 10);
+            // General keywords → 10 points
+            const keywordScore = calculateCategoryScore(prompt, image.keywords, 10);
 
+            score = objectScore + sceneScore + colorScore + detailScore + keywordScore;
+        } else {
+            // All images with just keywords (scale directly to 100 points)
+            score = calculateCategoryScore(prompt, image.keywords, 100);
+        }
 
-        // Colors → 15 points
-        const colorScore = calculateCategoryScore(
-            prompt,
-            image.colors,
-            15
-        );
-
-
-        // Details → 10 points
-        const detailScore = calculateCategoryScore(
-            prompt,
-            image.details,
-            10
-        );
-
-
-        // General keywords → 10 points
-        const keywordScore = calculateCategoryScore(
-            prompt,
-            image.keywords,
-            10
-        );
-
-
-        // ------------------------------------------
-        // Final score
-        // ------------------------------------------
-
-        let score =
-            objectScore +
-            sceneScore +
-            colorScore +
-            detailScore +
-            keywordScore;
-
-
-        score = Math.max(
-            0,
-            Math.min(100, score)
-        );
+        score = Math.max(0, Math.min(100, score));
 
 
         // ------------------------------------------
