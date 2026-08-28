@@ -1,4 +1,4 @@
-const API_URL = "http://192.168.29.110:5000";
+const API_URL = process.env.API_URL || "http://localhost:6011";
 
 async function createTeams() {
     let created = 0;

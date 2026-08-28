@@ -1,4 +1,12 @@
-const API_URL = "http://192.168.29.110:5000";
+const API_URL = (() => {
+    if (window.location.pathname.toLowerCase().startsWith('/aiquestx')) {
+        return `${window.location.origin}/AiQuestx`;
+    }
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return (window.location.port === '6011' || window.location.port === '5000') ? '' : 'http://localhost:6011';
+    }
+    return window.location.origin;
+})();
 let adminUsername = "";
 let adminPassword = "";
 

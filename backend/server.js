@@ -16,36 +16,44 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use("/api/teams", teamRoutes);
-app.use("/api/images", imageRoutes);
-app.use("/api/competition", competitionRoutes);
-app.use("/api/evaluation", evaluationRoutes);
-app.use("/api/admin", adminRoutes);
-// Serve frontend files
-app.use(express.static(path.join(__dirname, "../frontend")));
+// API Routers
+const apiRouter = express.Router();
+apiRouter.use("/teams", teamRoutes);
+apiRouter.use("/images", imageRoutes);
+apiRouter.use("/competition", competitionRoutes);
+apiRouter.use("/evaluation", evaluationRoutes);
+apiRouter.use("/admin", adminRoutes);
+
+// Mount API on both /api and /AiQuestx/api
+app.use("/api", apiRouter);
+app.use("/AiQuestx/api", apiRouter);
+
 // Serve admin files
-app.use(
-    "/admin",
-    express.static(path.join(__dirname, "../admin"))
-);
-app.get("/", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "../frontend/html/index.html")
-    );
+app.use("/AiQuestx/admin", express.static(path.join(__dirname, "../admin")));
+app.use("/admin", express.static(path.join(__dirname, "../admin")));
+
+// Serve frontend files
+app.use("/AiQuestx", express.static(path.join(__dirname, "../frontend")));
+app.use(express.static(path.join(__dirname, "../frontend")));
+
+// Route handlers
+app.get(["/", "/AiQuestx"], (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
-app.get("/admin", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "../admin/index.html")
-    );
+
+app.get(["/admin", "/AiQuestx/admin"], (req, res) => {
+    res.sendFile(path.join(__dirname, "../admin/index.html"));
 });
 
 // Test route
-app.get("/api/test", (req, res) => {
+const testHandler = (req, res) => {
     res.json({
         success: true,
         message: "AI QUESTX backend is working"
     });
-});
+};
+app.get("/api/test", testHandler);
+app.get("/AiQuestx/api/test", testHandler);
 
 // MongoDB connection
 const MONGO_URI = process.env.MONGO_URI;
@@ -64,7 +72,7 @@ if (MONGO_URI) {
 }
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 6011;
 
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`AI QUESTX Server running on port ${PORT}`);

@@ -1,4 +1,12 @@
-const API_URL = "http://192.168.29.110:5000";
+const API_URL = (() => {
+    if (window.location.pathname.toLowerCase().startsWith('/aiquestx')) {
+        return `${window.location.origin}/AiQuestx`;
+    }
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return (window.location.port === '6011' || window.location.port === '5000') ? '' : 'http://localhost:6011';
+    }
+    return window.location.origin;
+})();
 let teamId = null;
 let timerInterval = null;
 let syncTimeout = null;
@@ -156,7 +164,7 @@ await fetch(
         // ===============================
 
         if (data.filename) {
-    const imagePath = `/frontend/photos/${data.filename}`;
+    const imagePath = `photos/${data.filename}`;
 
     competitionImage.src = imagePath;
 
@@ -800,8 +808,8 @@ if (qrResult) {
 
 
     // URL opened after scanning
-    const qrData =
-    `http://192.168.29.110:5500/frontend/room.html?teamId=${encodeURIComponent(data.teamId)}`;
+    const currentBase = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
+    const qrData = `${currentBase}/room.html?teamId=${encodeURIComponent(data.teamId)}`;
 
     console.log(
         "Generating QR:",
