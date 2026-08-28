@@ -2,7 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 
 const ATLAS_URI = "mongodb://vu241fa04170_db_user:AIQUESTX123@ac-crson2y-shard-00-00.sjypahm.mongodb.net:27017,ac-crson2y-shard-00-01.sjypahm.mongodb.net:27017,ac-crson2y-shard-00-02.sjypahm.mongodb.net:27017/aiquestx?ssl=true&replicaSet=atlas-p2sgyg-shard-0&authSource=admin&appName=AIQUESTX";
-const LOCAL_URI = process.env.LOCAL_MONGO_URI || process.env.MONGO_URI || "mongodb://127.0.0.1:4867/AI_Questx";
+const LOCAL_URI = process.env.LOCAL_MONGO_URI || process.env.MONGO_URI;
 
 async function migrateData() {
     let atlasConn = null;
